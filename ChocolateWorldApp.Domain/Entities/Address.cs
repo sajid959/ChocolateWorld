@@ -8,16 +8,17 @@ namespace ChocolateWorldApp.Domain.Entities
 {
     public class Address
     {
-        public Guid Id { get; }
-        public Guid UserId { get; }
-        public string RecipientName { get; }
-        public string RecipientPhone { get; }
-        public string Line1 { get; }
-        public string? Line2 { get; }
-        public string City { get; }
+        private Address() { }
+        public Guid Id { get; private set; }
+        public Guid UserId { get; private set; }
+        public string RecipientName { get; private set; }
+        public string RecipientPhone { get; private set; }
+        public string Line1 { get; private set; }
+        public string? Line2 { get; private set; }
+        public string City { get; private set; }
 
-        public string State { get; }
-        public string PinCode { get; }
+        public string State { get; private set; }
+        public string PinCode { get; private set; }
 
         public Address(
             Guid id,

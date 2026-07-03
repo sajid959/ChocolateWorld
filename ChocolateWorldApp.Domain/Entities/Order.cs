@@ -9,16 +9,17 @@ namespace ChocolateWorldApp.Domain.Entities
 {
     public class Order
     {
-        public Guid Id { get; }
-        public Guid UserId { get; }
-        public Guid DeliverAddressId { get; }
-        public Guid ParentOrderId { get; }
-        public Guid B2BAccountId { get; }
-        public OrderStatus Status { get; }
-        public string PaymentMethod { get; }
-        public DateOnly DeliveryDate { get; }
-        public decimal TotalAmount { get; }
-        public DateTimeOffset CreatedAt { get; }
+        private Order() { }
+        public Guid Id { get; private set; }
+        public Guid UserId { get; private set; }
+        public Guid DeliverAddressId { get; private set; }
+        public Guid ParentOrderId { get; private set; }
+        public Guid B2BAccountId { get; private set; }
+        public OrderStatus Status { get; private set; }
+        public string PaymentMethod { get; private set; }
+        public DateOnly DeliveryDate { get; private set; }
+        public decimal TotalAmount { get; private set; }
+        public DateTimeOffset CreatedAt { get; private set; }
 
         public Order(
             Guid id,

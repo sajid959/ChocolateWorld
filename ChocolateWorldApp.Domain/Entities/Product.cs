@@ -8,12 +8,13 @@ namespace ChocolateWorldApp.Domain.Entities
 {
     public class Product
     {
-        public Guid Id { get; }
-        public string Name { get; }
-        public string Description { get; }
-        public string OccasionTags { get; }
-        public string AttributesJson { get; }
-        public bool IsActive { get; }
+        private Product() { }
+        public Guid Id { get; private set; }
+        public string Name { get; private set; }
+        public string Description { get; private set; }
+        public string OccasionTags { get; private set; }
+        public string AttributesJson { get; private set; }
+        public bool IsActive { get; private set; }
 
         public Product(
             Guid id,
