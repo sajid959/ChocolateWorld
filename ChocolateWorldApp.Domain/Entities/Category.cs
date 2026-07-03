@@ -8,13 +8,14 @@ namespace ChocolateWorldApp.Domain.Entities
 {
     public class Category
     {
-        public Guid Id { get;}
-        public string Name { get;}
-        public string Slug { get;}
-        public string Description { get;}
-        public Guid? ParentcategoryId { get;}
-        public int DisplayOrder {  get;}
-        public bool IsActive { get;}
+        private Category() { }
+        public Guid Id { get; private set; }
+        public string Name { get; private set; }
+        public string Slug { get; private set; }
+        public string Description { get; private set; }
+        public Guid? ParentcategoryId { get; private set; }
+        public int DisplayOrder {  get; private set; }
+        public bool IsActive { get; private set; }
 
         public Category(
             Guid id,

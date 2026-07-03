@@ -8,10 +8,11 @@ namespace ChocolateWorldApp.Domain.Entities
 {
     public class ProductVariant
     {
-        public Guid Id { get; }
-        public decimal Price { get;}
-        public int BoxSize { get;}
-        public Guid ProductId { get;}
+        private ProductVariant() { }
+        public Guid Id { get; private set; }
+        public decimal Price { get; private set; }
+        public int BoxSize { get; private set; }
+        public Guid ProductId { get; private set; }
 
         public ProductVariant(Guid id, decimal price, int boxSize, Guid productId)
         {

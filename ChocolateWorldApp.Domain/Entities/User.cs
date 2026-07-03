@@ -8,12 +8,13 @@ namespace ChocolateWorldApp.Domain.Entities
 {
     public class User
     {
-        public Guid Id { get; }
-        public string Name { get; }
-        public string? Email { get; }
-        public string Phone {  get; }
-        public string Role { get; }
-        public DateTimeOffset? CreatedAt { get; } = DateTimeOffset.Now;
+        private User() { }
+        public Guid Id { get; private set; }
+        public string Name { get; private set; }
+        public string? Email { get; private set; }
+        public string Phone {  get; private set; }
+        public string Role { get; private set; }
+        public DateTimeOffset? CreatedAt { get; private set; } = DateTimeOffset.Now;
 
         public User(Guid id, string name, string? email, string phone, string role, DateTimeOffset cretedAt) {
             id = Id;
