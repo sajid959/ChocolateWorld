@@ -1,6 +1,6 @@
 using ChocolateWorldApp.Api.Middleware;
-using ChocolateWorldApp.Infrastructure.Persistence;
-using Microsoft.EntityFrameworkCore;
+using ChocolateWorldApp.Application;
+using ChocolateWorldApp.Infrastructure;
 using Microsoft.OpenApi;
 using Serilog;
 
@@ -14,7 +14,6 @@ builder.Host.UseSerilog((context, service, configuration) =>
 });
 builder.Services.AddControllers();
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
-builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("MyConn")));
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(options =>
 {
@@ -37,7 +36,8 @@ builder.Services.AddSwaggerGen(options =>
             options.IncludeXmlComments(xmlPath);
         } 
 });
-
+builder.Services.AddApplication();
+builder.Services.AddInfrastructure(builder.Configuration);
 var app = builder.Build();
 app.UseMiddleware<ExcptionHandlingMiddleware>();
 app.UseSerilogRequestLogging();
@@ -63,7 +63,7 @@ app.UseAuthorization();
 app.MapControllers();
 try
 {
-    Log.Information("Starting web host - ChcolateWorldApp.Api");
+    Log.Information("Starting web host - ChocolateWorldApp.Api");
     app.Run();
 }
 catch (Exception ex)
