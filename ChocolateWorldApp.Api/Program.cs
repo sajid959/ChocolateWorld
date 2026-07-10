@@ -38,9 +38,10 @@ builder.Services.AddSwaggerGen(options =>
 });
 builder.Services.AddApplication();
 builder.Services.AddInfrastructure(builder.Configuration);
+
 var app = builder.Build();
-app.UseMiddleware<ExcptionHandlingMiddleware>();
 app.UseSerilogRequestLogging();
+app.UseMiddleware<ExcptionHandlingMiddleware>();
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 if (app.Environment.IsDevelopment())
