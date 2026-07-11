@@ -88,6 +88,8 @@ namespace ChocolateWorldApp.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("CategoryId");
+
                     b.ToTable("Products");
                 });
 
@@ -97,8 +99,8 @@ namespace ChocolateWorldApp.Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<int>("BoxSize")
-                        .HasColumnType("int");
+                    b.Property<string>("BoxSize")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(18,2)");
@@ -107,6 +109,8 @@ namespace ChocolateWorldApp.Infrastructure.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("ProductId");
 
                     b.ToTable("ProductVariants");
                 });
@@ -138,6 +142,31 @@ namespace ChocolateWorldApp.Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Users");
+                });
+
+            modelBuilder.Entity("ChocolateWorldApp.Domain.Entities.Product", b =>
+                {
+                    b.HasOne("ChocolateWorldApp.Domain.Entities.Category", "Category")
+                        .WithMany()
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Category");
+                });
+
+            modelBuilder.Entity("ChocolateWorldApp.Domain.Entities.ProductVariant", b =>
+                {
+                    b.HasOne("ChocolateWorldApp.Domain.Entities.Product", null)
+                        .WithMany("ProductVariants")
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("ChocolateWorldApp.Domain.Entities.Product", b =>
+                {
+                    b.Navigation("ProductVariants");
                 });
 #pragma warning restore 612, 618
         }

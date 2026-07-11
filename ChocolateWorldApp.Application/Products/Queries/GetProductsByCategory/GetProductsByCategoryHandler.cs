@@ -36,9 +36,10 @@ public class GetProductsByCategoryHandler
                 p.Id,
                 p.Name,
                 p.Slug,
-                p.OccasionTags, 
+                p.OccasionTags,
                 p.ProductVariants
-                    .Min(pv => (decimal?)pv.Price) ?? 0m)).ToListAsync(cancellationToken);
+                    .Min(pv => (decimal?)pv.Price) ?? 0m
+                )).ToListAsync(cancellationToken);
         
         return new PagedResult<ProductSummaryDto>(items, query.CurrentPage, query.PageSize, totalCount);
 

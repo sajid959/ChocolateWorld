@@ -11,10 +11,10 @@ namespace ChocolateWorldApp.Domain.Entities
         private ProductVariant() { }
         public Guid Id { get; private set; }
         public decimal Price { get; private set; }
-        public int BoxSize { get; private set; }
+        public string? BoxSize { get; private set; }
         public Guid ProductId { get; private set; }
 
-        public ProductVariant(Guid id, decimal price, int boxSize, Guid productId)
+        public ProductVariant(Guid id, decimal price, string boxSize, Guid productId)
         {
             Id= id;
             Price= price;
