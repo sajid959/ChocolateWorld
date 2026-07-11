@@ -15,7 +15,9 @@ public class GetAllCategoriesHandler
 
     public async Task<IReadOnlyList<CategoryDto>> HandleAsync(GetAllCategoriesQuery query, CancellationToken cancellationToken)
     {
-        return await _context.Categories.Where(c => c.IsActive)
+        return await _context.Categories
+            .AsNoTracking()
+            .Where(c => c.IsActive)
             .OrderBy(c => c.DisplayOrder)
             .Select(c => new CategoryDto(
                 c.Id,
