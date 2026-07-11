@@ -1,6 +1,7 @@
 using ChocolateWorldApp.Application.Categories.Queries.GetAllCategories;
 using ChocolateWorldApp.Application.Categories.Queries.GetCategoryBySlug;
 using ChocolateWorldApp.Application.Products.Queries;
+using ChocolateWorldApp.Application.Products.Queries.GetProductDetailsBySlug;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace ChocolateWorldApp.Application;
@@ -12,6 +13,8 @@ public static class DependencyInjection
         services.AddScoped<GetAllCategoriesHandler>();
         services.AddScoped<GetCategoryBySlugHandler>();
         services.AddScoped<GetProductsByCategoryHandler>();
+        services.AddScoped<GetProductDetailsBySlugHandler>();
+        services.AddScoped<SearchProductHandler>();
         return services;
     }
     
