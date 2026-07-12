@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace ChocolateWorldApp.Api.Controllers;
 
 [ApiController]
-[Route( "api/[controller]" )]
+[Route( "api/products" )]
 [Produces( "application/json" )]
 public class ProductsController : ControllerBase
 {

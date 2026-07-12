@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace ChocolateWorldApp.Api.Controllers;
 
 [ApiController]
-[Route("api/[controller]")]
+[Route("api/categories")]
 [Produces("application/json")]
 public class CategoriesController : ControllerBase
 {
