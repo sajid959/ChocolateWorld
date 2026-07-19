@@ -1,6 +1,10 @@
+using System.Text;
 using ChocolateWorldApp.Api.Middleware;
 using ChocolateWorldApp.Application;
 using ChocolateWorldApp.Infrastructure;
+using ChocolateWorldApp.Infrastructure.Auth;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi;
 using Serilog;
 
@@ -35,9 +39,49 @@ builder.Services.AddSwaggerGen(options =>
         {
             options.IncludeXmlComments(xmlPath);
         } 
+        options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme()
+            {
+                Name = "Authorization",
+                Type = SecuritySchemeType.Http,
+                Scheme = "Bearer",
+                BearerFormat = "JWT",
+                In = ParameterLocation.Header,
+                Description = "Enter your Jwt (without the 'Bearer' prefix"
+            }
+        );
+        options.AddSecurityRequirement(document =>
+            new OpenApiSecurityRequirement
+            {
+                [
+                    new OpenApiSecuritySchemeReference("Bearer", document)
+                ] = []
+            });
+        
 });
 builder.Services.AddApplication();
 builder.Services.AddInfrastructure(builder.Configuration);
+// creating an options for jwt from appsetting so that it can be used anywhere
+var jwtOptions = builder.Configuration.GetSection("Jwt").Get<JwtOptions>() ?? throw new Exception("Missing jwt configuration");
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).
+    AddJwtBearer(options =>
+        {
+            options.TokenValidationParameters = new TokenValidationParameters()
+            {
+                //validation of tokens
+                ValidateIssuer = true,
+                ValidateAudience = true,
+                ValidateLifetime = true,
+                ValidateIssuerSigningKey = true,
+                //fetching from appsettings
+                ValidIssuer = jwtOptions.Issuer,
+                ValidAudience = jwtOptions.Audience,
+                // fetching and converting to Binary
+                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtOptions.Secret)),
+                ClockSkew = TimeSpan.Zero
+            };
+        }
+    );
+builder.Services.AddAuthorization();
 
 var app = builder.Build();
 app.UseSerilogRequestLogging();
@@ -58,7 +102,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
