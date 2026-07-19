@@ -22,8 +22,11 @@ public static class DependencyInjection
         //Singleton because its expensive -> opens tcp conn, does handshake, negotiate protocol.
         //this is internally thread safe
         services.AddSingleton<IConnectionMultiplexer>(sp => ConnectionMultiplexer.Connect(redisConnectionString));
+        services.Configure<JwtOptions>(configuration.GetSection("Jwt"));
         services.AddScoped<IOtpService, RedisOtpService>( );
         services.AddScoped<ISmsSender, StubSmsSender>();
+        services.AddScoped<IRefreshTokenStore, RedisRefreshTokenStore>();
+        services.AddScoped<ITokenService, JwtTokenService>();
         return services;
     }
     
