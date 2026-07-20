@@ -1,3 +1,4 @@
+using System.Runtime.Serialization;
 using ChocolateWorldApp.Application.Auth.Commands.RefreshToken;
 using ChocolateWorldApp.Application.Auth.Commands.SendOtp;
 using ChocolateWorldApp.Application.Auth.Commands.VerifyOtp;
@@ -5,6 +6,8 @@ using ChocolateWorldApp.Application.Categories.Queries.GetAllCategories;
 using ChocolateWorldApp.Application.Categories.Queries.GetCategoryBySlug;
 using ChocolateWorldApp.Application.Products.Queries;
 using ChocolateWorldApp.Application.Products.Queries.GetProductDetailsBySlug;
+using ChocolateWorldApp.Application.Users.Commands;
+using ChocolateWorldApp.Application.Users.Queries;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace ChocolateWorldApp.Application;
@@ -21,6 +24,8 @@ public static class DependencyInjection
         services.AddScoped<SendOtpHandler>();
         services.AddScoped<VerifyOtpHandler>();
         services.AddScoped<RefreshTokenHandler>();
+        services.AddScoped<GetMeHandler>();
+        services.AddScoped<UpdateMeHandler>();
         return services;
     }
     
